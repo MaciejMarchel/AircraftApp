@@ -1,9 +1,11 @@
+import mu.KotlinLogging
 import java.util.*
 import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
 import java.lang.System.exit
 
 val scanner = Scanner(System.`in`)
+private val logger = KotlinLogging.logger {}
 
 fun main(args: Array<String>) {
     runMenu()
@@ -46,22 +48,22 @@ FUNCTIONS FOR THE MENU TO WORK
  */
 
 fun addAircraft(){
-    println("Add an aircraft")
+    logger.info { "Add an aircraft" }
 }
 
 fun listAircraft(){
-    println("List all aircraft")
+    logger.info { "List all aircraft" }
 }
 
 fun updateAircraft(){
-    println("Update an existing aircraft")
+    logger.info { "Update an existing aircraft" }
 }
 
 fun deleteAircraft(){
-    println("Delete an aircraft")
+    logger.info { "Delete an aircraft" }
 }
 
 fun exitApp(){
-    println("Exiting the app")
+    logger.info { "Exiting the app" }
     exit(0)
 }
