@@ -13,7 +13,7 @@ class AircraftAPI {
 
     fun listAllAircraft(): String {
         return if (aircrafts.isEmpty()) {
-            "No aircrafts stored"
+            "No aircraft's stored"
         } else {
             var listOfAircraft = ""
             for (i in aircrafts.indices) {
