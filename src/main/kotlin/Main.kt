@@ -1,4 +1,7 @@
+import controllers.AircraftAPI
+import models.Aircraft
 import mu.KotlinLogging
+import utils.ScannerInput.readNextDouble
 import java.util.*
 import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
@@ -6,6 +9,7 @@ import java.lang.System.exit
 
 val scanner = Scanner(System.`in`)
 private val logger = KotlinLogging.logger {}
+private val aircraftAPI = AircraftAPI()
 
 fun main(args: Array<String>) {
     runMenu()
@@ -48,11 +52,23 @@ FUNCTIONS FOR THE MENU TO WORK
  */
 
 fun addAircraft(){
-    logger.info { "Add an aircraft" }
+    //logger.info { "Add an aircraft" }
+    val airName = readNextLine("Enter a name of the aircraft: ")
+    val airType = readNextLine("Enter the type of the aircraft: ")
+    val airCost = readNextDouble("Enter the cost of the aircraft: ")
+    val airMake = readNextLine("Enter the make of the aircraft: ")
+    val isAdded = aircraftAPI.add(Aircraft(airName, airType, airCost, airMake, false))
+
+    if (isAdded) {
+        println("Added Successfully")
+    } else {
+        println("Add Failed")
+    }
 }
 
 fun listAircraft(){
-    logger.info { "List all aircraft" }
+    //logger.info { "List all aircraft" }
+    println(aircraftAPI.listAllAircraft())
 }
 
 fun updateAircraft(){
