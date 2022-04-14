@@ -2,6 +2,7 @@ import controllers.AircraftAPI
 import models.Aircraft
 import mu.KotlinLogging
 import utils.ScannerInput.readNextDouble
+import utils.ScannerInput.readNextFloat
 import java.util.*
 import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
