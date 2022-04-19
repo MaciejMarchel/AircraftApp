@@ -1,15 +1,17 @@
 import controllers.AircraftAPI
 import models.Aircraft
 import mu.KotlinLogging
+import persistence.XMLSerializer
 import utils.ScannerInput.readNextDouble
 import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
+import java.io.File
 import java.lang.System.exit
 import java.util.*
 
 val scanner = Scanner(System.`in`)
 private val logger = KotlinLogging.logger {}
-private val aircraftAPI = AircraftAPI()
+private val aircraftAPI = AircraftAPI(XMLSerializer(File("aircraft.xml")))
 
 fun main(args: Array<String>) {
     runMenu()
@@ -27,6 +29,9 @@ fun mainMenu(): Int {
          > |   3) Update an aircraft        |
          > |   4) Delete an aircraft        |
          > ----------------------------------
+         > |  20) Save                      |
+         > |  21) Load                      |
+         > ----------------------------------
          > |   0) Exit                      |
          > ----------------------------------
          > ==>> """.trimMargin(">")
@@ -41,6 +46,8 @@ fun runMenu() {
             2 -> listAircraft()
             3 -> updateAircraft()
             4 -> deleteAircraft()
+            20 -> save()
+            21 -> load()
             0 -> exitApp()
             else -> System.out.println("Invalid option was entered: ${option}")
         }
@@ -107,6 +114,23 @@ fun deleteAircraft(){
         } else {
             println("Deletion Failed")
         }
+    }
+}
+
+//Persistence functions
+fun save() {
+    try {
+        aircraftAPI.store()
+    } catch (e: Exception) {
+        System.err.println("Error writing to file: $e")
+    }
+}
+
+fun load() {
+    try {
+        aircraftAPI.load()
+    } catch (e: Exception) {
+        System.err.println("Error reading from file: $e")
     }
 }
 
