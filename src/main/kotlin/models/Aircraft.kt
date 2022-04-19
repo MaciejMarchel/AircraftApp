@@ -1,11 +1,11 @@
 package models
 
 data class Aircraft(
-    val airName: String,
-    val airType: String,
-    val airCost: Double,
-    val airMake: String,
-    val airAvailable: Boolean){
+    var airName: String,
+    var airType: String,
+    var airCost: Double,
+    var airMake: String,
+    var airAvailable: Boolean){
 }
 
 
