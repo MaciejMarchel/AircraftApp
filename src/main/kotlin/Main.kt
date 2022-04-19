@@ -77,7 +77,18 @@ fun updateAircraft(){
 }
 
 fun deleteAircraft(){
-    logger.info { "Delete an aircraft" }
+    //logger.info { "Delete an aircraft" }
+    if (aircraftAPI.numberOfAircrafts() > 0) {
+        //only ask the user to choose an aircraft to delete if it exists
+        val indexToDelete = readNextInt("Enter the index of the aircraft you wish to delete: ")
+        //pass the index of the aircraft to the AircraftAPI for deletion and check if successful
+        val aircraftToDelete = aircraftAPI.deleteAircraft(indexToDelete)
+        if (aircraftToDelete != null) {
+            println("Delete Successful! Deleted Aircraft: ${aircraftToDelete.airName}")
+        } else {
+            println("Deletion Failed")
+        }
+    }
 }
 
 fun exitApp(){

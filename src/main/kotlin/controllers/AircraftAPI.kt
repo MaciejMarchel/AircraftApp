@@ -1,6 +1,7 @@
 package controllers
 
 import models.Aircraft
+import utils.Utilities.isValidListIndex
 
 class AircraftAPI {
 
@@ -22,4 +23,15 @@ class AircraftAPI {
             listOfAircraft
         }
     }
+
+    fun numberOfAircrafts(): Int {
+        return aircrafts.size
+    }
+
+    fun deleteAircraft(indexToDelete: Int): Aircraft? {
+        return if (isValidListIndex(indexToDelete, aircrafts)) {
+            aircrafts.removeAt(indexToDelete)
+        } else null
+    }
+
 }
