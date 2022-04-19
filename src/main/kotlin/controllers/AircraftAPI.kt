@@ -1,10 +1,12 @@
 package controllers
 
 import models.Aircraft
+import persistence.Serializer
 import utils.Utilities.isValidListIndex
 
-class AircraftAPI {
+class AircraftAPI(serializerType: Serializer) {
 
+    private var serializer: Serializer = serializerType
     private var aircrafts = ArrayList<Aircraft>()
 
     /* Functions */
@@ -62,4 +64,14 @@ class AircraftAPI {
         return isValidListIndex(index, aircrafts);
     }
 
+    //persistence
+    @Throws(Exception::class)
+    fun load() {
+        aircrafts = serializer.read() as ArrayList<Aircraft>
+    }
+
+    @Throws(Exception::class)
+    fun store() {
+        serializer.write(aircrafts)
+    }
 }
