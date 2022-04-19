@@ -2,8 +2,9 @@ package controllers
 
 import models.Aircraft
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 class AircraftAPITest {
@@ -52,5 +53,26 @@ class AircraftAPITest {
     fun `adding an Aircraft to an empty list adds to ArrayList`(){
         val newAircraft = Aircraft("Cessna 172", "Turboprop Engine", 8000.00, "Textron Aviation", false)
         assertTrue(emptyAircraft!!.add(newAircraft))
+    }
+
+    //Testing delete function
+    @Nested
+    inner class deleteAircrafts {
+
+        @Test
+        fun `deleting a Note that does not exist, returns null`() {
+            assertNull(emptyAircraft!!.deleteAircraft(0))
+            assertNull(populatedAircraft!!.deleteAircraft(-1))
+            assertNull(populatedAircraft!!.deleteAircraft(5))
+        }
+
+        @Test
+        fun `deleting a note that exists delete and returns deleted object`() {
+            assertEquals(5, populatedAircraft!!.numberOfAircrafts())
+            assertEquals(Comac, populatedAircraft!!.deleteAircraft(4))
+            assertEquals(4, populatedAircraft!!.numberOfAircrafts())
+            assertEquals(Cessna, populatedAircraft!!.deleteAircraft(0))
+            assertEquals(3, populatedAircraft!!.numberOfAircrafts())
+        }
     }
 }
