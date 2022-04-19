@@ -2,11 +2,10 @@ import controllers.AircraftAPI
 import models.Aircraft
 import mu.KotlinLogging
 import utils.ScannerInput.readNextDouble
-import utils.ScannerInput.readNextFloat
-import java.util.*
 import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
 import java.lang.System.exit
+import java.util.*
 
 val scanner = Scanner(System.`in`)
 private val logger = KotlinLogging.logger {}
@@ -73,7 +72,27 @@ fun listAircraft(){
 }
 
 fun updateAircraft(){
-    logger.info { "Update an existing aircraft" }
+    //logger.info { "Update an existing aircraft" }
+    listAircraft()
+    if (aircraftAPI.numberOfAircrafts() > 0) {
+        //only ask user to choose aircraft if it exists
+        val indexToUpdate = readNextInt("Enter the index of the aircraft to update: ")
+        if (aircraftAPI.isValidIndex(indexToUpdate)) {
+            val airName = readNextLine("Enter a name for the aircraft: ")
+            val airType = readNextLine("Enter the type for the aircraft: ")
+            val airMake = readNextLine("Enter the make for the aircraft: ")
+            val airCost = readNextDouble("Enter the cost of the aircraft: ")
+
+            //pass the index of the aircraft and new aircraft details to AircraftAPI for updating & to check success
+            if (aircraftAPI.updateAircraft(indexToUpdate, Aircraft(airName,airType,airCost,airMake, false))){
+                println("Update Successful")
+            } else {
+                println("Update Failed")
+            }
+        } else {
+            println("There are no aircraft for this index number")
+        }
+    }
 }
 
 fun deleteAircraft(){
