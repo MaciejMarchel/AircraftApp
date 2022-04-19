@@ -6,11 +6,11 @@ store info on them for their customer base.
 ## Features
 - Simple easy to use Menu
 - Logging Capability
+- JUnit Testing
 
 ## Planned Features
 - Functioning Menu (can add, list, update etc)
 - Search capabilities
-- JUnit testing
 - Validation
 - Sub Menu's
 - Persistence
