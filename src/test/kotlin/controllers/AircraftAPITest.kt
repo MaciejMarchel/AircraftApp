@@ -3,6 +3,7 @@ package controllers
 import models.Aircraft
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.assertTrue
+import persistence.JSONSerializer
 import persistence.XMLSerializer
 import java.io.File
 import java.util.*
@@ -106,87 +107,84 @@ class AircraftAPITest {
     }
 
     //TODO PERSISTENCE JUNIT TESTING
-    /*
     @Nested
     inner class PersistenceTests {
 
         @Test
         fun `saving and loading an empty collection in XML doesn't crash app`() {
-            // Saving an empty notes.XML file.
-            val storingNotes = NoteAPI(XMLSerializer(File("notes.xml")))
+            // Saving an empty aircrafts.XML file.
+            val storingNotes = AircraftAPI(XMLSerializer(File("aircrafts.xml")))
             storingNotes.store()
 
-            //Loading the empty notes.xml file into a new object
-            val loadedNotes = NoteAPI(XMLSerializer(File("notes.xml")))
+            //Loading the empty aircrafts.xml file into a new object
+            val loadedNotes = AircraftAPI(XMLSerializer(File("aircrafts.xml")))
             loadedNotes.load()
 
-            //Comparing the source of the notes (storingNotes) with the XML loaded notes (loadedNotes)
-            assertEquals(0, storingNotes.numberOfNotes())
-            assertEquals(0, loadedNotes.numberOfNotes())
-            assertEquals(storingNotes.numberOfNotes(), loadedNotes.numberOfNotes())
+            //Comparing the source of the notes (storingAircrafts) with the XML loaded notes (loadedAircrafts)
+            assertEquals(0, storingNotes.numberOfAircrafts())
+            assertEquals(0, loadedNotes.numberOfAircrafts())
+            assertEquals(storingNotes.numberOfAircrafts(), loadedNotes.numberOfAircrafts())
         }
 
         @Test
         fun `saving and loading an loaded collection in XML doesn't loose data`() {
-            // Storing 3 notes to the notes.XML file.
-            val storingNotes = NoteAPI(XMLSerializer(File("notes.xml")))
-            storingNotes.add(testApp!!)
-            storingNotes.add(swim!!)
-            storingNotes.add(summerHoliday!!)
+            // Storing 3 notes to the aircrafts.XML file.
+            val storingNotes = AircraftAPI(XMLSerializer(File("aircrafts.xml")))
+            storingNotes.add(Airbus!!)
+            storingNotes.add(Comac!!)
+            storingNotes.add(Boeing!!)
             storingNotes.store()
 
-            //Loading notes.xml into a different collection
-            val loadedNotes = NoteAPI(XMLSerializer(File("notes.xml")))
+            //Loading aircrafts.xml into a different collection
+            val loadedNotes = AircraftAPI(XMLSerializer(File("aircrafts.xml")))
             loadedNotes.load()
 
-            //Comparing the source of the notes (storingNotes) with the XML loaded notes (loadedNotes)
-            assertEquals(3, storingNotes.numberOfNotes())
-            assertEquals(3, loadedNotes.numberOfNotes())
-            assertEquals(storingNotes.numberOfNotes(), loadedNotes.numberOfNotes())
-            assertEquals(storingNotes.findNote(0), loadedNotes.findNote(0))
-            assertEquals(storingNotes.findNote(1), loadedNotes.findNote(1))
-            assertEquals(storingNotes.findNote(2), loadedNotes.findNote(2))
+            //Comparing the source of the notes (storingAircrafts) with the XML loaded notes (loadedAircrafts)
+            assertEquals(3, storingNotes.numberOfAircrafts())
+            assertEquals(3, loadedNotes.numberOfAircrafts())
+            assertEquals(storingNotes.numberOfAircrafts(), loadedNotes.numberOfAircrafts())
+            assertEquals(storingNotes.findAircraft(0), loadedNotes.findAircraft(0))
+            assertEquals(storingNotes.findAircraft(1), loadedNotes.findAircraft(1))
+            assertEquals(storingNotes.findAircraft(2), loadedNotes.findAircraft(2))
         }
     }
 
     //JSON
             @Test
         fun `saving and loading an empty collection in JSON doesn't crash app`() {
-            // Saving an empty notes.json file.
-            val storingNotes = NoteAPI(JSONSerializer(File("notes.json")))
+            // Saving an empty aircrafts.json file.
+            val storingNotes = AircraftAPI(JSONSerializer(File("aircrafts.json")))
             storingNotes.store()
 
-            //Loading the empty notes.json file into a new object
-            val loadedNotes = NoteAPI(JSONSerializer(File("notes.json")))
+            //Loading the empty aircrafts.json file into a new object
+            val loadedNotes = AircraftAPI(JSONSerializer(File("aircrafts.json")))
             loadedNotes.load()
 
-            //Comparing the source of the notes (storingNotes) with the json loaded notes (loadedNotes)
-            assertEquals(0, storingNotes.numberOfNotes())
-            assertEquals(0, loadedNotes.numberOfNotes())
-            assertEquals(storingNotes.numberOfNotes(), loadedNotes.numberOfNotes())
+            //Comparing the source of the notes (storingAircrafts) with the json loaded notes (loadedAircrafts)
+            assertEquals(0, storingNotes.numberOfAircrafts())
+            assertEquals(0, loadedNotes.numberOfAircrafts())
+            assertEquals(storingNotes.numberOfAircrafts(), loadedNotes.numberOfAircrafts())
         }
 
         @Test
         fun `saving and loading an loaded collection in JSON doesn't loose data`() {
-            // Storing 3 notes to the notes.json file.
-            val storingNotes = NoteAPI(JSONSerializer(File("notes.json")))
-            storingNotes.add(testApp!!)
-            storingNotes.add(swim!!)
-            storingNotes.add(summerHoliday!!)
+            // Storing 3 notes to the aircrafts.json file.
+            val storingNotes = AircraftAPI(JSONSerializer(File("aircrafts.json")))
+            storingNotes.add(Airbus!!)
+            storingNotes.add(Comac!!)
+            storingNotes.add(Boeing!!)
             storingNotes.store()
 
-            //Loading notes.json into a different collection
-            val loadedNotes = NoteAPI(JSONSerializer(File("notes.json")))
+            //Loading aircrafts.json into a different collection
+            val loadedNotes = AircraftAPI(JSONSerializer(File("aircrafts.json")))
             loadedNotes.load()
 
-            //Comparing the source of the notes (storingNotes) with the json loaded notes (loadedNotes)
-            assertEquals(3, storingNotes.numberOfNotes())
-            assertEquals(3, loadedNotes.numberOfNotes())
-            assertEquals(storingNotes.numberOfNotes(), loadedNotes.numberOfNotes())
-            assertEquals(storingNotes.findNote(0), loadedNotes.findNote(0))
-            assertEquals(storingNotes.findNote(1), loadedNotes.findNote(1))
-            assertEquals(storingNotes.findNote(2), loadedNotes.findNote(2))
+            //Comparing the source of the notes (storingAircrafts) with the json loaded notes (loadedAircrafts)
+            assertEquals(3, storingNotes.numberOfAircrafts())
+            assertEquals(3, loadedNotes.numberOfAircrafts())
+            assertEquals(storingNotes.numberOfAircrafts(), loadedNotes.numberOfAircrafts())
+            assertEquals(storingNotes.findAircraft(0), loadedNotes.findAircraft(0))
+            assertEquals(storingNotes.findAircraft(1), loadedNotes.findAircraft(1))
+            assertEquals(storingNotes.findAircraft(2), loadedNotes.findAircraft(2))
         }
-
-     */
 }
