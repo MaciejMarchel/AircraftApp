@@ -53,6 +53,7 @@ fun runMenu() {
             5 -> searchAircraft()
             6 -> searchType()
             7 -> searchMake()
+            8 -> listByHighToLow()
             20 -> save()
             21 -> load()
             0 -> exitApp()
@@ -80,9 +81,42 @@ fun addAircraft(){
     }
 }
 
+fun listSubMenu() {
+    if (aircraftAPI.numberOfAircrafts() > 0) {
+        val option = readNextInt(
+            """
+                  > ---------------------------------
+                  > |   1) View ALL aircraft        |
+                  > |   2) View UNAVAILABLE aircraft|
+                  > |   3) View AVAILABLE aircraft  |
+                  > ---------------------------------
+         > ==>> """.trimMargin(">"))
+        when (option) {
+            1 -> listAircraft()
+            2 -> listUnavailableAircraft()
+            3 -> listAvailableAircraft()
+            else -> println("Invalid option entered: " + option)
+        }
+    } else {
+        println("Option invalid - No aircraft stored")
+    }
+}
+
 fun listAircraft(){
     //logger.info { "List all aircraft" }
     println(aircraftAPI.listAllAircraft())
+}
+
+fun listAvailableAircraft(){
+    println(aircraftAPI.listAvailableAircraft())
+}
+
+fun listUnavailableAircraft(){
+    println(aircraftAPI.listUnavailableAircraft())
+}
+
+fun listByHighToLow(){
+    println(aircraftAPI.listHighToLow())
 }
 
 fun updateAircraft(){
@@ -152,6 +186,21 @@ fun searchMake() {
         println("No aircraft found")
     } else {
         println(searchResults)
+    }
+}
+
+//make available
+fun availableAircraft() {
+    listUnavailableAircraft()
+    if (aircraftAPI.numberOfUnavailableAircraft() > 0) {
+        //only ask the user to choose the aircraft to make available if unavailable aircraft exists
+        val indexToAvailable = readNextInt("Enter the index of the aircraft to make available: ")
+        //pass the index of the aircraft to AircraftAPI to make available and check for success
+        if (aircraftAPI.airListing(indexToAvailable)) {
+            println("Made Available")
+        } else {
+            println("Not successful please try again!")
+        }
     }
 }
 
