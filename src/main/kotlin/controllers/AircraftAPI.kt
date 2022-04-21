@@ -14,17 +14,23 @@ class AircraftAPI(serializerType: Serializer) {
         return aircrafts.add(aircraft)
     }
 
-    fun listAllAircraft(): String {
-        return if (aircrafts.isEmpty()) {
-            "No aircraft's stored"
-        } else {
-            var listOfAircraft = ""
-            for (i in aircrafts.indices) {
-                listOfAircraft += "${i}: ${aircrafts[i]} \n"
-            }
-            listOfAircraft
-        }
-    }
+    fun listAllAircraft(): String =
+        if (aircrafts.isEmpty()) "No aircraft stored"
+        else formatListString(aircrafts)
+
+    fun listUnavailableAircraft(): String =
+        if (numberOfUnavailableAircraft() == 0) "No unavailable aircraft stored"
+        else formatListString(aircrafts.filter { aircraft -> !aircraft.airAvailable})
+
+    fun listAvailableAircraft(): String =
+        if (numberOfAvailableAircraft() == 0) "No available aircraft stored"
+        else formatListString(aircrafts.filter { aircraft -> aircraft.airAvailable })
+
+    fun listHighToLow(): String =
+        formatListString(aircrafts.sortedByDescending { aircraft -> aircraft.airCost })
+
+    fun listLowToHigh(): String =
+        formatListString(aircrafts.sortedBy { aircraft -> aircraft.airCost })
 
     fun numberOfAircrafts(): Int {
         return aircrafts.size
@@ -82,6 +88,24 @@ class AircraftAPI(serializerType: Serializer) {
         aircraftToFormat
             .joinToString (separator = "\n") { aircraft ->
               aircrafts.indexOf(aircraft).toString() + ": " + aircraft.toString() }
+
+    //Archive Listing Function + number of archived aircraft
+
+    fun numberOfAvailableAircraft(): Int = aircrafts.count {aircraft: Aircraft -> aircraft.airAvailable}
+    fun numberOfUnavailableAircraft(): Int = aircrafts.count {aircraft: Aircraft -> !aircraft.airAvailable}
+    //fun numberOfCostAircraft(): Int = aircrafts. { aircraft: Aircraft -> aircraft.airCost }
+
+    fun airListing(indexToAvailable: Int): Boolean {
+        if (isValidIndex(indexToAvailable)) {
+            val airToAvailable = aircrafts[indexToAvailable]
+            if (!airToAvailable.airAvailable) {
+                airToAvailable.airAvailable = true
+                return true
+            }
+        }
+        return false
+    }
+
 
     //persistence
     @Throws(Exception::class)
