@@ -25,13 +25,12 @@ fun mainMenu(): Int {
          > ----------------------------------
          > | NOTE MENU                      |
          > |   1) Add an aircraft           |
-         > |   2) List all aircraft         |
+         > |   2) List aircraft             |
          > |   3) Update an aircraft        |
          > |   4) Delete an aircraft        |
+         > |   5) Make aircraft available   |
          > ----------------------------------
-         > |   5) Search Aircraft           |
-         > |   6) Search by Type            |
-         > |   7) Search by Make            |
+         > |   6) Search Aircraft           |
          > ----------------------------------
          > |  20) Save                      |
          > |  21) Load                      |
@@ -47,13 +46,11 @@ fun runMenu() {
         val option = mainMenu()
         when (option) {
             1 -> addAircraft()
-            2 -> listAircraft()
+            2 -> listSubMenu()
             3 -> updateAircraft()
             4 -> deleteAircraft()
-            5 -> searchAircraft()
-            6 -> searchType()
-            7 -> searchMake()
-            8 -> listByHighToLow()
+            5 -> availableAircraft()
+            6 -> searchSubMenu()
             20 -> save()
             21 -> load()
             0 -> exitApp()
@@ -89,12 +86,37 @@ fun listSubMenu() {
                   > |   1) View ALL aircraft        |
                   > |   2) View UNAVAILABLE aircraft|
                   > |   3) View AVAILABLE aircraft  |
+                  > |   4) View Cost by High to Low |
+                  > |   5) View Cost by Low to High |
                   > ---------------------------------
          > ==>> """.trimMargin(">"))
         when (option) {
             1 -> listAircraft()
             2 -> listUnavailableAircraft()
             3 -> listAvailableAircraft()
+            4 -> listByHighToLow()
+            5 -> listByLowToHigh()
+            else -> println("Invalid option entered: " + option)
+        }
+    } else {
+        println("Option invalid - No aircraft stored")
+    }
+}
+
+fun searchSubMenu() {
+    if (aircraftAPI.numberOfAircrafts() > 0) {
+        val option = readNextInt(
+            """
+                  > ---------------------------------
+                  > |   1) Search by name           |
+                  > |   2) Search by type           |
+                  > |   3) Search by make           |
+                  > ---------------------------------
+         > ==>> """.trimMargin(">"))
+        when (option) {
+            1 -> searchAircraft()
+            2 -> searchType()
+            3 -> searchMake()
             else -> println("Invalid option entered: " + option)
         }
     } else {
@@ -107,16 +129,20 @@ fun listAircraft(){
     println(aircraftAPI.listAllAircraft())
 }
 
-fun listAvailableAircraft(){
-    println(aircraftAPI.listAvailableAircraft())
-}
-
 fun listUnavailableAircraft(){
     println(aircraftAPI.listUnavailableAircraft())
 }
 
+fun listAvailableAircraft(){
+    println(aircraftAPI.listAvailableAircraft())
+}
+
 fun listByHighToLow(){
     println(aircraftAPI.listHighToLow())
+}
+
+fun listByLowToHigh(){
+    println(aircraftAPI.listLowToHigh())
 }
 
 fun updateAircraft(){
@@ -160,7 +186,7 @@ fun deleteAircraft(){
 
 //Search functions
 fun searchAircraft() {
-    val searchName = readNextLine("Enter the description to search by: ")
+    val searchName = readNextLine("Enter the NAME to search by: ")
     val searchResults = aircraftAPI.searchByName(searchName)
     if (searchResults.isEmpty()) {
         println("No aircraft found")
@@ -170,7 +196,7 @@ fun searchAircraft() {
 }
 
 fun searchType() {
-    val searchType = readNextLine("Enter the description to search by: ")
+    val searchType = readNextLine("Enter the TYPE to search by: ")
     val searchResults = aircraftAPI.searchByType(searchType)
     if (searchResults.isEmpty()) {
         println("No aircraft found")
@@ -180,7 +206,7 @@ fun searchType() {
 }
 
 fun searchMake() {
-    val searchMake = readNextLine("Enter the description to search by: ")
+    val searchMake = readNextLine("Enter the MAKE to search by: ")
     val searchResults = aircraftAPI.searchByMake(searchMake)
     if (searchResults.isEmpty()) {
         println("No aircraft found")
