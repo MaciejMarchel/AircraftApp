@@ -51,6 +51,8 @@ fun runMenu() {
             3 -> updateAircraft()
             4 -> deleteAircraft()
             5 -> searchAircraft()
+            6 -> searchType()
+            7 -> searchMake()
             20 -> save()
             21 -> load()
             0 -> exitApp()
@@ -129,7 +131,7 @@ fun searchAircraft() {
     if (searchResults.isEmpty()) {
         println("No aircraft found")
     } else {
-        println("searchResults")
+        println(searchResults)
     }
 }
 
@@ -139,7 +141,7 @@ fun searchType() {
     if (searchResults.isEmpty()) {
         println("No aircraft found")
     } else {
-        println("searchResults")
+        println(searchResults)
     }
 }
 
@@ -149,7 +151,7 @@ fun searchMake() {
     if (searchResults.isEmpty()) {
         println("No aircraft found")
     } else {
-        println("searchResults")
+        println(searchResults)
     }
 }
 
