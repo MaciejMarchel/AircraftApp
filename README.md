@@ -9,10 +9,13 @@ store info on them for their customer base.
 - Logging Capability
 - JUnit Testing
 - Persistence
-
-## Planned Features
-- Addtional menu features
 - Search capabilities
 - Validation
+- Addtional menu features
 - Sub Menu's
+
+## Planned Features
+- More JUnit testing
+- List by alphabetical order
+
 
