@@ -60,9 +60,28 @@ class AircraftAPI(serializerType: Serializer) {
         return false
     }
 
+    //Searching functions
+    fun searchByName (searchString : String) =
+        formatListString(
+            aircrafts.filter { aircraft -> aircraft.airName.contains(searchString, ignoreCase = true)  })
+
     fun isValidIndex(index: Int) :Boolean{
         return isValidListIndex(index, aircrafts);
     }
+
+    fun searchByType (searchString: String) =
+        formatListString(
+            aircrafts.filter { aircraft -> aircraft.airType.contains(searchString, ignoreCase = true)  })
+
+    fun searchByMake (searchString: String) =
+        formatListString(
+            aircrafts.filter { aircraft -> aircraft.airMake.contains(searchString, ignoreCase = true) })
+
+    //Helper Method
+    private fun formatListString(aircraftToFormat : List<Aircraft>) :String =
+        aircraftToFormat
+            .joinToString (separator = "\n") { aircraft ->
+              aircrafts.indexOf(aircraft).toString() + ": " + aircraft.toString() }
 
     //persistence
     @Throws(Exception::class)

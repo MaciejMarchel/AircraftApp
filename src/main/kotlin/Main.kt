@@ -29,6 +29,10 @@ fun mainMenu(): Int {
          > |   3) Update an aircraft        |
          > |   4) Delete an aircraft        |
          > ----------------------------------
+         > |   5) Search Aircraft           |
+         > |   6) Search by Type            |
+         > |   7) Search by Make            |
+         > ----------------------------------
          > |  20) Save                      |
          > |  21) Load                      |
          > ----------------------------------
@@ -46,6 +50,9 @@ fun runMenu() {
             2 -> listAircraft()
             3 -> updateAircraft()
             4 -> deleteAircraft()
+            5 -> searchAircraft()
+            6 -> searchType()
+            7 -> searchMake()
             20 -> save()
             21 -> load()
             0 -> exitApp()
@@ -114,6 +121,37 @@ fun deleteAircraft(){
         } else {
             println("Deletion Failed")
         }
+    }
+}
+
+//Search functions
+fun searchAircraft() {
+    val searchName = readNextLine("Enter the description to search by: ")
+    val searchResults = aircraftAPI.searchByName(searchName)
+    if (searchResults.isEmpty()) {
+        println("No aircraft found")
+    } else {
+        println(searchResults)
+    }
+}
+
+fun searchType() {
+    val searchType = readNextLine("Enter the description to search by: ")
+    val searchResults = aircraftAPI.searchByType(searchType)
+    if (searchResults.isEmpty()) {
+        println("No aircraft found")
+    } else {
+        println(searchResults)
+    }
+}
+
+fun searchMake() {
+    val searchMake = readNextLine("Enter the description to search by: ")
+    val searchResults = aircraftAPI.searchByMake(searchMake)
+    if (searchResults.isEmpty()) {
+        println("No aircraft found")
+    } else {
+        println(searchResults)
     }
 }
 
