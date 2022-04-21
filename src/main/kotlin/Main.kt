@@ -1,3 +1,4 @@
+import com.sun.jdi.event.ExceptionEvent
 import controllers.AircraftAPI
 import models.Aircraft
 import mu.KotlinLogging
@@ -5,9 +6,12 @@ import persistence.XMLSerializer
 import utils.ScannerInput.readNextDouble
 import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
+import utils.TypeMakeUtility.isValidMake
 import java.io.File
 import java.lang.System.exit
 import java.util.*
+import utils.TypeMakeUtility.isValidType
+import java.io.IOException
 
 val scanner = Scanner(System.`in`)
 private val logger = KotlinLogging.logger {}
@@ -72,9 +76,10 @@ fun addAircraft(){
     val isAdded = aircraftAPI.add(Aircraft(airName, airType, airCost, airMake, false))
 
     if (isAdded) {
-        println("Added Successfully")
+        check(isValidType(typeToCheck = airType)) { "Please input the correct data for the field of Type" }
+        check(isValidMake(makeToCheck = airMake)) { "Please input the correct data for the field of Make" }
     } else {
-        println("Add Failed")
+        println("Added Successfully")
     }
 }
 

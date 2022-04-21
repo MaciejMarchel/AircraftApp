@@ -3,6 +3,7 @@ package controllers
 import models.Aircraft
 import persistence.Serializer
 import utils.Utilities.isValidListIndex
+import utils.TypeMakeUtility.isValidType
 
 class AircraftAPI(serializerType: Serializer) {
 
