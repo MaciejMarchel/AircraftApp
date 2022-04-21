@@ -76,8 +76,8 @@ fun addAircraft(){
     val isAdded = aircraftAPI.add(Aircraft(airName, airType, airCost, airMake, false))
 
     if (isAdded) {
-        check(isValidType(typeToCheck = airType)) { "Please input the correct data for the field of Type" }
-        check(isValidMake(makeToCheck = airMake)) { "Please input the correct data for the field of Make" }
+        check(isValidType(typeToCheck = airType)) { "Please input the correct data for the field of Type" } //checks for the correct type inputted
+        check(isValidMake(makeToCheck = airMake)) { "Please input the correct data for the field of Make" } //checks for the correct make inputted
     } else {
         println("Added Successfully")
     }
@@ -164,9 +164,10 @@ fun updateAircraft(){
 
             //pass the index of the aircraft and new aircraft details to AircraftAPI for updating & to check success
             if (aircraftAPI.updateAircraft(indexToUpdate, Aircraft(airName,airType,airCost,airMake, false))){
-                println("Update Successful")
+                check(isValidType(typeToCheck = airType)) { "Please input the correct data for the field of Type" } //checks for the correct type inputted
+                check(isValidMake(makeToCheck = airMake)) { "Please input the correct data for the field of Make" } //checks for the correct make inputted
             } else {
-                println("Update Failed")
+                println("Update Successful")
             }
         } else {
             println("There are no aircraft for this index number")
