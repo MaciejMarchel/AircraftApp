@@ -1,3 +1,4 @@
+import com.sun.jdi.event.ExceptionEvent
 import controllers.AircraftAPI
 import models.Aircraft
 import mu.KotlinLogging
@@ -5,9 +6,12 @@ import persistence.XMLSerializer
 import utils.ScannerInput.readNextDouble
 import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
+import utils.TypeMakeUtility.isValidMake
 import java.io.File
 import java.lang.System.exit
 import java.util.*
+import utils.TypeMakeUtility.isValidType
+import java.io.IOException
 
 val scanner = Scanner(System.`in`)
 private val logger = KotlinLogging.logger {}
@@ -72,9 +76,10 @@ fun addAircraft(){
     val isAdded = aircraftAPI.add(Aircraft(airName, airType, airCost, airMake, false))
 
     if (isAdded) {
-        println("Added Successfully")
+        check(isValidType(typeToCheck = airType)) { "Please input the correct data for the field of Type" } //checks for the correct type inputted
+        check(isValidMake(makeToCheck = airMake)) { "Please input the correct data for the field of Make" } //checks for the correct make inputted
     } else {
-        println("Add Failed")
+        println("Added Successfully")
     }
 }
 
@@ -159,9 +164,10 @@ fun updateAircraft(){
 
             //pass the index of the aircraft and new aircraft details to AircraftAPI for updating & to check success
             if (aircraftAPI.updateAircraft(indexToUpdate, Aircraft(airName,airType,airCost,airMake, false))){
-                println("Update Successful")
+                check(isValidType(typeToCheck = airType)) { "Please input the correct data for the field of Type" } //checks for the correct type inputted
+                check(isValidMake(makeToCheck = airMake)) { "Please input the correct data for the field of Make" } //checks for the correct make inputted
             } else {
-                println("Update Failed")
+                println("Update Successful")
             }
         } else {
             println("There are no aircraft for this index number")
