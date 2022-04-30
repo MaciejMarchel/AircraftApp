@@ -1,0 +1,25 @@
+<object-stream>
+  <list>
+    <models.Aircraft>
+      <airName>Cessna 172</airName>
+      <airType>TurboProp</airType>
+      <airCost>8000.0</airCost>
+      <airMake>Textron Aviation</airMake>
+      <airAvailable>false</airAvailable>
+    </models.Aircraft>
+    <models.Aircraft>
+      <airName>Boeing 717 Business</airName>
+      <airType>TurboJet</airType>
+      <airCost>1.65E8</airCost>
+      <airMake>Boeing</airMake>
+      <airAvailable>false</airAvailable>
+    </models.Aircraft>
+    <models.Aircraft>
+      <airName>ACJ139</airName>
+      <airType>TurboJet</airType>
+      <airCost>1.05E8</airCost>
+      <airMake>Airbus</airMake>
+      <airAvailable>false</airAvailable>
+    </models.Aircraft>
+  </list>
+</object-stream>
