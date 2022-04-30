@@ -87,13 +87,14 @@ fun listSubMenu() {
     if (aircraftAPI.numberOfAircrafts() > 0) {
         val option = readNextInt(
             """
-                  > ---------------------------------
-                  > |   1) View ALL aircraft        |
-                  > |   2) View UNAVAILABLE aircraft|
-                  > |   3) View AVAILABLE aircraft  |
-                  > |   4) View Cost by High to Low |
-                  > |   5) View Cost by Low to High |
-                  > ---------------------------------
+                  > ----------------------------------
+                  > |   1) View ALL aircraft         |
+                  > |   2) View UNAVAILABLE aircraft |
+                  > |   3) View AVAILABLE aircraft   |
+                  > |   4) View Cost by High to Low  |
+                  > |   5) View Cost by Low to High  |
+                  > |   6) Sort by alphabetical order|
+                  > ----------------------------------
          > ==>> """.trimMargin(">"))
         when (option) {
             1 -> listAircraft()
@@ -101,6 +102,7 @@ fun listSubMenu() {
             3 -> listAvailableAircraft()
             4 -> listByHighToLow()
             5 -> listByLowToHigh()
+            6 -> listByAlpha()
             else -> println("Invalid option entered: " + option)
         }
     } else {
@@ -148,6 +150,10 @@ fun listByHighToLow(){
 
 fun listByLowToHigh(){
     println(aircraftAPI.listLowToHigh())
+}
+
+fun listByAlpha(){
+    println(aircraftAPI.listByAlpha())
 }
 
 fun updateAircraft(){

@@ -27,11 +27,17 @@ class AircraftAPI(serializerType: Serializer) {
         if (numberOfAvailableAircraft() == 0) "No available aircraft stored"
         else formatListString(aircrafts.filter { aircraft -> aircraft.airAvailable })
 
+    //Sort by high to low cost
     fun listHighToLow(): String =
         formatListString(aircrafts.sortedByDescending { aircraft -> aircraft.airCost })
 
+    //Sort by low to high cost
     fun listLowToHigh(): String =
         formatListString(aircrafts.sortedBy { aircraft -> aircraft.airCost })
+
+    //Sort by alphabetical order
+    fun listByAlpha(): String =
+        formatListString(aircrafts.sortedBy { aircraft -> aircraft.airName  })
 
     fun numberOfAircrafts(): Int {
         return aircrafts.size
