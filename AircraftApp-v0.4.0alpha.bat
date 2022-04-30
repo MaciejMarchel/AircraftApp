@@ -1,0 +1,1 @@
+java -jar AircraftApp-v0.4.0alpha.jar

@@ -24,7 +24,7 @@ fun mainMenu(): Int {
          > ----------------------------------
          > |        AIRCRAFT APP            |
          > ----------------------------------
-         > | NOTE MENU                      |
+         > | Main MENU                      |
          > |   1) Add an aircraft           |
          > |   2) List aircraft             |
          > |   3) Update an aircraft        |

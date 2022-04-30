@@ -1,0 +1,25 @@
+<object-stream>
+  <list>
+    <models.Aircraft>
+      <airName>ACJ350</airName>
+      <airType>Turbojet Engine</airType>
+      <airCost>2000000.0</airCost>
+      <airMake>Airbus</airMake>
+      <airAvailable>true</airAvailable>
+    </models.Aircraft>
+    <models.Aircraft>
+      <airName>Comac C919</airName>
+      <airType>Turbojet Engine</airType>
+      <airCost>1800000.0</airCost>
+      <airMake>Comac</airMake>
+      <airAvailable>true</airAvailable>
+    </models.Aircraft>
+    <models.Aircraft>
+      <airName>BBJ 737</airName>
+      <airType>Turbojet Engine</airType>
+      <airCost>2500000.0</airCost>
+      <airMake>Boeing</airMake>
+      <airAvailable>false</airAvailable>
+    </models.Aircraft>
+  </list>
+</object-stream>
