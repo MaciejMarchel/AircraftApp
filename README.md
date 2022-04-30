@@ -7,6 +7,9 @@ store info on them for their customer base.
 With version 0.4.0alpha this has been made simple, all you need to do is run the jar file which can be located by following this pathfile:
 C:\Users\Your Name\Desktop\AircraftApp and run AircraftApp-v0.4.0alpha.bat file.
 
+Project Wiki: https://github.com/MaciejMarchel/AircraftApp/wiki
+Github Page: https://maciejmarchel.github.io/AircraftApp/
+
 ## Features
 - Functioning Menu (can add, list all, update and delete)
 - Simple easy to use Menu
