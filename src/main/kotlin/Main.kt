@@ -1,4 +1,4 @@
-import com.sun.jdi.event.ExceptionEvent
+
 import controllers.AircraftAPI
 import models.Aircraft
 import mu.KotlinLogging
@@ -6,12 +6,9 @@ import persistence.XMLSerializer
 import utils.ScannerInput.readNextDouble
 import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
-import utils.TypeMakeUtility.isValidMake
 import java.io.File
 import java.lang.System.exit
-import java.util.*
-import utils.TypeMakeUtility.isValidType
-import java.io.IOException
+import java.util.Scanner
 
 val scanner = Scanner(System.`in`)
 private val logger = KotlinLogging.logger {}
@@ -58,7 +55,7 @@ fun runMenu() {
             20 -> save()
             21 -> load()
             0 -> exitApp()
-            else -> System.out.println("Invalid option was entered: ${option}")
+            else -> System.out.println("Invalid option was entered: $option")
         }
     } while (true)
 }
@@ -67,13 +64,10 @@ fun runMenu() {
 FUNCTIONS FOR THE MENU TO WORK
  */
 
-fun addAircraft(){
-    //logger.info { "Add an aircraft" }
-
-
+fun addAircraft() {
+    // logger.info { "Add an aircraft" }
 
     val airName = readNextLine("Enter a name of the aircraft: ")
-
 
     /*
     Had to use while loop to validate airType and airMake for adding and updating further down
@@ -84,12 +78,11 @@ fun addAircraft(){
     var type2 = "TurboJet"
     var type1 = "TurboProp"
 
-
-    while(airType.lowercase() != type1.lowercase() || airType.lowercase() != type2.lowercase()) {
+    while (airType.lowercase() != type1.lowercase() || airType.lowercase() != type2.lowercase()) {
 
         airType = readNextLine("Enter the type (TurboJet or TurboProp) of the aircraft: ")
 
-        if(airType.lowercase() == type1.lowercase() || airType.lowercase() == type2.lowercase()) {
+        if (airType.lowercase() == type1.lowercase() || airType.lowercase() == type2.lowercase()) {
             break
         } else {
             println("Please enter either TurboJet or TurboProp")
@@ -105,11 +98,11 @@ fun addAircraft(){
     var make3 = "Airbus"
     var make4 = "Comac"
 
-    while(airMake.lowercase() != make1.lowercase() || airMake.lowercase() != make2.lowercase() || airMake.lowercase() != make3.lowercase() || airMake.lowercase() != make4.lowercase()) {
+    while (airMake.lowercase() != make1.lowercase() || airMake.lowercase() != make2.lowercase() || airMake.lowercase() != make3.lowercase() || airMake.lowercase() != make4.lowercase()) {
 
         airMake = readNextLine("Enter the make (Textron Aviation, Boeing, Airbus, Comac) of the aircraft: ")
 
-        if(airMake.lowercase() == make1.lowercase() || airMake.lowercase() == make2.lowercase() || airMake.lowercase() == make3.lowercase() || airMake.lowercase() == make4.lowercase()) {
+        if (airMake.lowercase() == make1.lowercase() || airMake.lowercase() == make2.lowercase() || airMake.lowercase() == make3.lowercase() || airMake.lowercase() == make4.lowercase()) {
             break
         } else {
             println("Please enter either Textron Aviation, Boeing, Airbus or Comac")
@@ -120,8 +113,8 @@ fun addAircraft(){
 
     if (isAdded) {
         println("Added Successfully")
-        //check(isValidType(typeToCheck = airType)) { "Please input the correct data for the field of Type (TurboProp, TurboJet)" } //checks for the correct type inputted
-        //check(isValidMake(makeToCheck = airMake)) { "Please input the correct data for the field of Make (Textron Aviation, Boeing, Airbus, Comac)" } //checks for the correct make inputted
+        // check(isValidType(typeToCheck = airType)) { "Please input the correct data for the field of Type (TurboProp, TurboJet)" } //checks for the correct type inputted
+        // check(isValidMake(makeToCheck = airMake)) { "Please input the correct data for the field of Make (Textron Aviation, Boeing, Airbus, Comac)" } //checks for the correct make inputted
     } else {
         println("Failure to add aircraft")
     }
@@ -139,7 +132,8 @@ fun listSubMenu() {
                   > |   5) View Cost by Low to High  |
                   > |   6) Sort by alphabetical order|
                   > ----------------------------------
-         > ==>> """.trimMargin(">"))
+         > ==>> """.trimMargin(">")
+        )
         when (option) {
             1 -> listAircraft()
             2 -> listUnavailableAircraft()
@@ -163,7 +157,8 @@ fun searchSubMenu() {
                   > |   2) Search by type           |
                   > |   3) Search by make           |
                   > ---------------------------------
-         > ==>> """.trimMargin(">"))
+         > ==>> """.trimMargin(">")
+        )
         when (option) {
             1 -> searchAircraft()
             2 -> searchType()
@@ -175,58 +170,58 @@ fun searchSubMenu() {
     }
 }
 
-fun listAircraft(){
-    //logger.info { "List all aircraft" }
+fun listAircraft() {
+    // logger.info { "List all aircraft" }
     println(aircraftAPI.listAllAircraft())
 }
 
-fun listUnavailableAircraft(){
+fun listUnavailableAircraft() {
     println(aircraftAPI.listUnavailableAircraft())
 }
 
-fun listAvailableAircraft(){
+fun listAvailableAircraft() {
     println(aircraftAPI.listAvailableAircraft())
 }
 
-fun listByHighToLow(){
+fun listByHighToLow() {
     println(aircraftAPI.listHighToLow())
 }
 
-fun listByLowToHigh(){
+fun listByLowToHigh() {
     println(aircraftAPI.listLowToHigh())
 }
 
-fun listByAlpha(){
+fun listByAlpha() {
     println(aircraftAPI.listByAlpha())
 }
 
-fun updateAircraft(){
-    //logger.info { "Update an existing aircraft" }
+fun updateAircraft() {
+    // logger.info { "Update an existing aircraft" }
     listAircraft()
     if (aircraftAPI.numberOfAircrafts() > 0) {
-        //only ask user to choose aircraft if it exists
+        // only ask user to choose aircraft if it exists
         val indexToUpdate = readNextInt("Enter the index of the aircraft to update: ")
         if (aircraftAPI.isValidIndex(indexToUpdate)) {
             val airName = readNextLine("Enter a name for the aircraft: ")
 
-            //Validation for airType
+            // Validation for airType
             var airType = ""
 
             var type2 = "TurboJet"
             var type1 = "TurboProp"
 
-            while(airType.lowercase() != type1.lowercase() || airType.lowercase() != type2.lowercase()) {
+            while (airType.lowercase() != type1.lowercase() || airType.lowercase() != type2.lowercase()) {
 
                 airType = readNextLine("Enter the type (TurboJet or TurboProp) of the aircraft: ")
 
-                if(airType.lowercase() == type1.lowercase() || airType.lowercase() == type2.lowercase()) {
+                if (airType.lowercase() == type1.lowercase() || airType.lowercase() == type2.lowercase()) {
                     break
                 } else {
                     println("Please enter either TurboJet or TurboProp")
                 }
             }
 
-            //Validation for airMake
+            // Validation for airMake
             var airMake = ""
 
             var make1 = "Textron Aviation"
@@ -234,11 +229,11 @@ fun updateAircraft(){
             var make3 = "Airbus"
             var make4 = "Comac"
 
-            while(airMake.lowercase() != make1.lowercase() || airMake.lowercase() != make2.lowercase() || airMake.lowercase() != make3.lowercase() || airMake.lowercase() != make4.lowercase()) {
+            while (airMake.lowercase() != make1.lowercase() || airMake.lowercase() != make2.lowercase() || airMake.lowercase() != make3.lowercase() || airMake.lowercase() != make4.lowercase()) {
 
                 airMake = readNextLine("Enter the make (Textron Aviation, Boeing, Airbus, Comac) of the aircraft: ")
 
-                if(airMake.lowercase() == make1.lowercase() || airMake.lowercase() == make2.lowercase() || airMake.lowercase() == make3.lowercase() || airMake.lowercase() == make4.lowercase()) {
+                if (airMake.lowercase() == make1.lowercase() || airMake.lowercase() == make2.lowercase() || airMake.lowercase() == make3.lowercase() || airMake.lowercase() == make4.lowercase()) {
                     break
                 } else {
                     println("Please enter either Textron Aviation, Boeing, Airbus or Comac")
@@ -247,11 +242,11 @@ fun updateAircraft(){
 
             val airCost = readNextDouble("Enter the cost of the aircraft: ")
 
-            //pass the index of the aircraft and new aircraft details to AircraftAPI for updating & to check success
-            if (aircraftAPI.updateAircraft(indexToUpdate, Aircraft(airName,airType,airCost,airMake, false))){
+            // pass the index of the aircraft and new aircraft details to AircraftAPI for updating & to check success
+            if (aircraftAPI.updateAircraft(indexToUpdate, Aircraft(airName, airType, airCost, airMake, false))) {
                 println("Update Successful")
-                //check(isValidType(typeToCheck = airType)) { "Please input the correct data for the field of Type (TurboProp, TurboJet)" } //checks for the correct type inputted
-                //check(isValidMake(makeToCheck = airMake)) { "Please input the correct data for the field of Make (Textron Aviation, Boeing, Airbus, Comac)" } //checks for the correct make inputted
+                // check(isValidType(typeToCheck = airType)) { "Please input the correct data for the field of Type (TurboProp, TurboJet)" } //checks for the correct type inputted
+                // check(isValidMake(makeToCheck = airMake)) { "Please input the correct data for the field of Make (Textron Aviation, Boeing, Airbus, Comac)" } //checks for the correct make inputted
             } else {
                 println("Update Failed")
             }
@@ -261,12 +256,12 @@ fun updateAircraft(){
     }
 }
 
-fun deleteAircraft(){
-    //logger.info { "Delete an aircraft" }
+fun deleteAircraft() {
+    // logger.info { "Delete an aircraft" }
     if (aircraftAPI.numberOfAircrafts() > 0) {
-        //only ask the user to choose an aircraft to delete if it exists
+        // only ask the user to choose an aircraft to delete if it exists
         val indexToDelete = readNextInt("Enter the index of the aircraft you wish to delete: ")
-        //pass the index of the aircraft to the AircraftAPI for deletion and check if successful
+        // pass the index of the aircraft to the AircraftAPI for deletion and check if successful
         val aircraftToDelete = aircraftAPI.deleteAircraft(indexToDelete)
         if (aircraftToDelete != null) {
             println("Delete Successful! Deleted Aircraft: ${aircraftToDelete.airName}")
@@ -276,7 +271,7 @@ fun deleteAircraft(){
     }
 }
 
-//Search functions
+// Search functions
 fun searchAircraft() {
     val searchName = readNextLine("Enter the NAME to search by: ")
     val searchResults = aircraftAPI.searchByName(searchName)
@@ -307,13 +302,13 @@ fun searchMake() {
     }
 }
 
-//make available
+// make available
 fun availableAircraft() {
     listUnavailableAircraft()
     if (aircraftAPI.numberOfUnavailableAircraft() > 0) {
-        //only ask the user to choose the aircraft to make available if unavailable aircraft exists
+        // only ask the user to choose the aircraft to make available if unavailable aircraft exists
         val indexToAvailable = readNextInt("Enter the index of the aircraft to make available: ")
-        //pass the index of the aircraft to AircraftAPI to make available and check for success
+        // pass the index of the aircraft to AircraftAPI to make available and check for success
         if (aircraftAPI.airListing(indexToAvailable)) {
             println("Made Available")
         } else {
@@ -322,7 +317,7 @@ fun availableAircraft() {
     }
 }
 
-//Persistence functions
+// Persistence functions
 fun save() {
     try {
         aircraftAPI.store()
@@ -339,7 +334,7 @@ fun load() {
     }
 }
 
-fun exitApp(){
+fun exitApp() {
     logger.info { "Exiting the app" }
     exit(0)
 }
