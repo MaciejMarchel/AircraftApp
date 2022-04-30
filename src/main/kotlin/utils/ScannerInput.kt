@@ -1,7 +1,7 @@
 package utils
 
 import java.lang.NumberFormatException
-import java.util.*
+import java.util.Scanner
 
 /**
  * This class provides methods for the robust handling of I/O using Scanner.
@@ -48,7 +48,7 @@ object ScannerInput {
         do {
             try {
                 print(prompt)
-                return Scanner(System. `in`).next().toFloat()
+                return Scanner(System.`in`).next().toFloat()
             } catch (e: NumberFormatException) {
                 System.err.println("\tEnter a number please.")
             }

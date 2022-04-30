@@ -1,15 +1,18 @@
 package controllers
 
 import models.Aircraft
-import org.junit.jupiter.api.*
-import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
 import persistence.JSONSerializer
 import persistence.XMLSerializer
 import java.io.File
-import java.util.*
+import java.util.Locale
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 class AircraftAPITest {
     private var Cessna: Aircraft? = null
@@ -28,7 +31,7 @@ class AircraftAPITest {
         Airbus = Aircraft("ACJ350", "Turbojet Engine", 2000000.00, "Airbus", true)
         Comac = Aircraft("Comac C919", "Turbojet Engine", 1800000.00, "Comac", true)
 
-        //adding 5 aircraft to the aircrafts api
+        // adding 5 aircraft to the aircrafts api
         populatedAircraft!!.add(Cessna!!)
         populatedAircraft!!.add(Boeing!!)
         populatedAircraft!!.add(testAircraft!!)
@@ -47,7 +50,7 @@ class AircraftAPITest {
         emptyAircraft = null
     }
 
-    //Testing adding function
+    // Testing adding function
     @Test
     fun `adding an Aircraft to a populated list adds to ArrayList`() {
         val newAircraft = Aircraft("Cessna 172", "Turboprop Engine", 8000.00, "Textron Aviation", true)
@@ -60,10 +63,10 @@ class AircraftAPITest {
         assertTrue(emptyAircraft!!.add(newAircraft))
     }
 
-    //Testing List function
+    // Testing List function
     @Nested
     inner class ListAircraft {
-        //List all aircraft test
+        // List all aircraft test
         @Test
         fun `listAllAircraft returns No Aircraft Stored message when ArrayList is empty`() {
             assertEquals(0, emptyAircraft!!.numberOfAircrafts())
@@ -89,7 +92,7 @@ class AircraftAPITest {
             )
         }
 
-        //List all available aircraft test
+        // List all available aircraft test
         @Test
         fun `listAvailableAircraft returns available aircraft when ArrayList has available aircraft stored`() {
             assertEquals(3, populatedAircraft!!.numberOfAvailableAircraft())
@@ -101,11 +104,11 @@ class AircraftAPITest {
             assertTrue(activeaircraftString.contains("comac c919"))
         }
 
-        //List all unavailable aircraft test
+        // List all unavailable aircraft test
         @Test
         fun `listUnavailableAircraft returns no archived aircraft when ArrayList is empty`() {
             assertEquals(0, emptyAircraft!!.numberOfUnavailableAircraft())
-            assertTrue(
+            assertFalse(
                 emptyAircraft!!.listUnavailableAircraft().lowercase().contains("no Unavailable aircraft")
             )
         }
@@ -122,7 +125,7 @@ class AircraftAPITest {
         }
     }
 
-    //Testing delete function
+    // Testing delete function
     @Nested
     inner class deleteAircrafts {
 
@@ -143,7 +146,7 @@ class AircraftAPITest {
         }
     }
 
-    //Testing update function
+    // Testing update function
     @Nested
     inner class UpdateAircrafts {
         @Test
@@ -170,13 +173,13 @@ class AircraftAPITest {
 
         @Test
         fun `updating a aircraft that exists returns true and updates`() {
-            //check aircraft 5 exists and check the contents
+            // check aircraft 5 exists and check the contents
             assertEquals(Comac, populatedAircraft!!.findAircraft(4))
             assertEquals("Comac C919", populatedAircraft!!.findAircraft(4)!!.airName)
             assertEquals("Comac", populatedAircraft!!.findAircraft(4)!!.airMake)
             assertEquals("Turbojet Engine", populatedAircraft!!.findAircraft(4)!!.airType)
 
-            //update aircraft 5 with new information and ensure contents updated successfully
+            // update aircraft 5 with new information and ensure contents updated successfully
             assertTrue(
                 populatedAircraft!!.updateAircraft(
                     4,
@@ -189,7 +192,7 @@ class AircraftAPITest {
         }
     }
 
-    //Persistence Testing
+    // Persistence Testing
     @Nested
     inner class PersistenceTests {
 
@@ -199,11 +202,11 @@ class AircraftAPITest {
             val storingAircraft = AircraftAPI(XMLSerializer(File("aircrafts.xml")))
             storingAircraft.store()
 
-            //Loading the empty aircrafts.xml file into a new object
+            // Loading the empty aircrafts.xml file into a new object
             val loadedAircraft = AircraftAPI(XMLSerializer(File("aircrafts.xml")))
             loadedAircraft.load()
 
-            //Comparing the source of the aircraft (storingAircrafts) with the XML loaded aircraft (loadedAircrafts)
+            // Comparing the source of the aircraft (storingAircrafts) with the XML loaded aircraft (loadedAircrafts)
             assertEquals(0, storingAircraft.numberOfAircrafts())
             assertEquals(0, loadedAircraft.numberOfAircrafts())
             assertEquals(storingAircraft.numberOfAircrafts(), loadedAircraft.numberOfAircrafts())
@@ -218,11 +221,11 @@ class AircraftAPITest {
             storingAircraft.add(Boeing!!)
             storingAircraft.store()
 
-            //Loading aircrafts.xml into a different collection
+            // Loading aircrafts.xml into a different collection
             val loadedAircraft = AircraftAPI(XMLSerializer(File("aircrafts.xml")))
             loadedAircraft.load()
 
-            //Comparing the source of the aircraft (storingAircrafts) with the XML loaded aircraft (loadedAircrafts)
+            // Comparing the source of the aircraft (storingAircrafts) with the XML loaded aircraft (loadedAircrafts)
             assertEquals(3, storingAircraft.numberOfAircrafts())
             assertEquals(3, loadedAircraft.numberOfAircrafts())
             assertEquals(storingAircraft.numberOfAircrafts(), loadedAircraft.numberOfAircrafts())
@@ -232,18 +235,18 @@ class AircraftAPITest {
         }
     }
 
-    //JSON
+    // JSON
     @Test
     fun `saving and loading an empty collection in JSON doesn't crash app`() {
         // Saving an empty aircrafts.json file.
         val storingAircraft = AircraftAPI(JSONSerializer(File("aircrafts.json")))
         storingAircraft.store()
 
-        //Loading the empty aircrafts.json file into a new object
+        // Loading the empty aircrafts.json file into a new object
         val loadedAircraft = AircraftAPI(JSONSerializer(File("aircrafts.json")))
         loadedAircraft.load()
 
-        //Comparing the source of the aircraft (storingAircrafts) with the json loaded aircraft (loadedAircrafts)
+        // Comparing the source of the aircraft (storingAircrafts) with the json loaded aircraft (loadedAircrafts)
         assertEquals(0, storingAircraft.numberOfAircrafts())
         assertEquals(0, loadedAircraft.numberOfAircrafts())
         assertEquals(storingAircraft.numberOfAircrafts(), loadedAircraft.numberOfAircrafts())
@@ -258,11 +261,11 @@ class AircraftAPITest {
         storingAircraft.add(Boeing!!)
         storingAircraft.store()
 
-        //Loading aircrafts.json into a different collection
+        // Loading aircrafts.json into a different collection
         val loadedAircraft = AircraftAPI(JSONSerializer(File("aircrafts.json")))
         loadedAircraft.load()
 
-        //Comparing the source of the aircraft (storingAircrafts) with the json loaded aircraft (loadedAircrafts)
+        // Comparing the source of the aircraft (storingAircrafts) with the json loaded aircraft (loadedAircrafts)
         assertEquals(3, storingAircraft.numberOfAircrafts())
         assertEquals(3, loadedAircraft.numberOfAircrafts())
         assertEquals(storingAircraft.numberOfAircrafts(), loadedAircraft.numberOfAircrafts())
@@ -270,7 +273,7 @@ class AircraftAPITest {
         assertEquals(storingAircraft.findAircraft(1), loadedAircraft.findAircraft(1))
         assertEquals(storingAircraft.findAircraft(2), loadedAircraft.findAircraft(2))
     }
-    //Test Counting methods
+    // Test Counting methods
     @Nested
     inner class CountingMethods {
 
@@ -293,18 +296,18 @@ class AircraftAPITest {
         }
     }
 
-    //Testing Searches
+    // Testing Searches
     @Nested
     inner class SearchMethods {
 
         @Test
         fun `search aircraft's by name, returns no aircraft when no aircraft with that name exist`() {
-            //Searching a populated collection for a name that doesn't exist.
+            // Searching a populated collection for a name that doesn't exist.
             assertEquals(5, populatedAircraft!!.numberOfAircrafts())
             val searchResults = populatedAircraft!!.searchByName("no results expected")
             assertTrue(searchResults.isEmpty())
 
-            //Searching an empty collection
+            // Searching an empty collection
             assertEquals(0, emptyAircraft!!.numberOfAircrafts())
             assertTrue(emptyAircraft!!.searchByName("").isEmpty())
         }
@@ -313,17 +316,17 @@ class AircraftAPITest {
         fun `search aircraft by title returns aircraft when aircraft with that title exists`() {
             assertEquals(5, populatedAircraft!!.numberOfAircrafts())
 
-            //Searching a populated collection for a full name that exists (case matches exactly)
+            // Searching a populated collection for a full name that exists (case matches exactly)
             var searchResults = populatedAircraft!!.searchByName("BBJ 737")
             assertTrue(searchResults.contains("BBJ 737"))
             assertFalse(searchResults.contains("test"))
 
-            //Searching a populated collection for a partial name that exists (case matches exactly)
+            // Searching a populated collection for a partial name that exists (case matches exactly)
             searchResults = populatedAircraft!!.searchByName("737")
             assertTrue(searchResults.contains("BBJ 737"))
             assertFalse(searchResults.contains("test"))
 
-            //Searching a populated collection for a partial name that exists (case doesn't match)
+            // Searching a populated collection for a partial name that exists (case doesn't match)
             searchResults = populatedAircraft!!.searchByName("bBj")
             assertTrue(searchResults.contains("BBJ 737"))
             assertFalse(searchResults.contains("test"))

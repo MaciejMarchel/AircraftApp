@@ -5,6 +5,5 @@ data class Aircraft(
     var airType: String,
     var airCost: Double,
     var airMake: String,
-    var airAvailable: Boolean)
-
-
+    var airAvailable: Boolean
+)
